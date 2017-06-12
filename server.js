@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var fileUploadUtil = require('express-fileupload');
 var session = require('express-session');
 var favicon = require('serve-favicon');
+var path = require('path');
 
 var userRouter = require('./controllers/userController');
 var couponRouter = require('./controllers/couponController');
