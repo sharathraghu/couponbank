@@ -26,4 +26,5 @@ app.get('/', function(req, res) {
   res.render('home');
 });
 
-app.listen(9088);
+var port = (process.env.PORT === undefined) ? '9088' : process.env.PORT;
+app.listen(port);
