@@ -1,0 +1,16 @@
+.top-margin {
+    margin-top: 10px;
+}
+
+.bottom-marin {
+     margin-top: 10px;
+}
+
+#animateProgress {
+    display: none;
+}
+
+.progress-bar {
+    -webkit-transition: none !important;
+    transition: none !important;
+}
