@@ -3,6 +3,7 @@ var express = expressConfig();
 var bodyParser = require('body-parser');
 var fileUploadUtil = require('express-fileupload');
 var session = require('express-session');
+var favicon = require('serve-favicon');
 
 var userRouter = require('./controllers/userController');
 var couponRouter = require('./controllers/couponController');
@@ -13,6 +14,8 @@ app.use("/asset", express.static(__dirname+'/views'));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(fileUploadUtil());
 app.use(session({secret: 'CouponBank', resave: false, saveUninitialized: false, cookie: {maxAge: 30000}, name:'id'}));
+app.use(favicon(path.join(__dirname,'views','imgs','favicon.ico')));
+
 app.use(userRouter);
 app.use(couponRouter);
 
