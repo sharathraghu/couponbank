@@ -13,19 +13,6 @@ couponRouter.post('/newCoupon', function(req, res){
   let coupon = new Coupon();
   var coupons = [];
   var couponSession = req.session;
-<<<<<<< HEAD
-  coupon.setCouponName(req.body.couponName);
-  coupon.setCompanyName(req.body.companyName);
-  coupon.setFilePath(req.files.exampleInputFile.name);
-  coupon.setFileBinData("data:"+req.files.exampleInputFile.mimetype+";base64,"+new Buffer(req.files.exampleInputFile.data).toString('base64')); 
-  coupons.push(coupon);
-  
-  var user = new User();
-  user.setFisrstName(couponSession.user._firstName);
-  user.setFisrstName(couponSession.user._lastName);
-  user.setFisrstName(couponSession.user._email);
-  user.setFisrstName(couponSession.user._password);
-=======
   
   var newCoupon = new CouponModel(
     {
@@ -50,7 +37,6 @@ couponRouter.post('/newCoupon', function(req, res){
     });
   });
 
->>>>>>> refs/remotes/origin/master
   res.render('myCoupons', {
     user: user,
     coupons: coupons
