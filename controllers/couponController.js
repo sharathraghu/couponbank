@@ -3,23 +3,27 @@ const User = require('../classes/user');
 
 var express = expressConfig();
 var couponRouter = express.Router();
-var mongoose = require('mongoose');
 var CouponModel = require('../classes/couponModel');
 
 const Coupon = require('../classes/coupon.js');
-mongoose.connect('mongodb://couponbank:bankcoupon@couponbankcluster-shard-00-00-myyod.mongodb.net:27017,couponbankcluster-shard-00-01-myyod.mongodb.net:27017,couponbankcluster-shard-00-02-myyod.mongodb.net:27017/couponbank?ssl=true&replicaSet=CouponBankCluster-shard-0&authSource=admin');
 
 couponRouter.post('/newCoupon', function(req, res){
-  let coupon = new Coupon();
   var coupons = [];
   var couponSession = req.session;
+  var suser = couponSession.user;
+  let user = new User();
   
+  user.setFisrstName(suser._firstName);
+  user.setLastName(suser._lastName);
+  user.setEmail(suser._email);
+  user.setPassword(suser._password);
+
   var newCoupon = new CouponModel(
     {
       coupon_name : req.body.couponName,
       company_name : req.body.companyName,
       file_type : req.files.exampleInputFile.mimetype,
-      binary_data : new Buffer(req.files.exampleInputFile.data)
+      binary_data : req.files.exampleInputFile.data
     }
   );
 
@@ -27,36 +31,40 @@ couponRouter.post('/newCoupon', function(req, res){
     if (err) throw err;
     CouponModel.find({}, function(err, couponsFromDB) {
       if (err) throw err;
-      couponsFromDB.forEach(function(element) {
-          let coupon = new Coupon();
-          coupon.setCouponName(element.coupon_name);
-          coupon.setCompanyName(element.company_name);
-          coupon.setFileBinData("data:"+element.file_type+";base64,"+new Buffer(element.binary_data).toString('base64'));
-          coupons.push(coupon);
-      });
+      rtrieveAndDisplay(couponsFromDB,coupons,res, user);
     });
-  });
-
-  res.render('myCoupons', {
-    user: user,
-    coupons: coupons
   });
 });
 
 couponRouter.get('/myCoupons', function(req, res){
   var coupons = [];
   var couponSession = req.session;
+  var suser = couponSession.user;
+  let user = new User();
+
+  user.setFisrstName(suser._firstName);
+  user.setLastName(suser._lastName);
+  user.setEmail(suser._email);
+  user.setPassword(suser._password);
 
   CouponModel.find({}, function(err, couponsFromDB) {
     if (err) throw err;
-    couponsFromDB.forEach(function(element) {
+    rtrieveAndDisplay(couponsFromDB,coupons,res, user);
+  });
+});
+
+function rtrieveAndDisplay(couponsFromDB, coupons, res, user) {
+  couponsFromDB.forEach(function(element) {
         let coupon = new Coupon();
         coupon.setCouponName(element.coupon_name);
         coupon.setCompanyName(element.company_name);
         coupon.setFileBinData("data:"+element.file_type+";base64,"+element.binary_data.toString('base64'));
-        coupons.push(coupon);
-    });
+        coupons.push(coupon);          
   });
-});
+  res.render('myCoupons', {
+    user: user,
+    coupons: coupons
+  });
+}
 
 module.exports = couponRouter;
