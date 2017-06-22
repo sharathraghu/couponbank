@@ -15,9 +15,12 @@ couponRouter.post('/newCoupon', function(req, res){
   coupon.setFilePath(req.files.exampleInputFile.name);
   coupon.setFileBinData("data:"+req.files.exampleInputFile.mimetype+";base64,"+new Buffer(req.files.exampleInputFile.data).toString('base64')); 
   coupons.push(coupon);
-  coupons.push(coupon);
- var user = couponSession.user;
- console.log(user);
+  
+  var user = new User();
+  user.setFisrstName(couponSession.user._firstName);
+  user.setFisrstName(couponSession.user._lastName);
+  user.setFisrstName(couponSession.user._email);
+  user.setFisrstName(couponSession.user._password);
   res.render('myCoupons', {
     user: user,
     coupons: coupons
