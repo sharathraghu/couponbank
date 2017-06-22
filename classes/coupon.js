@@ -3,7 +3,7 @@ class Coupon {
     constructor() {
         this._couponName = "";
         this._companyName = "";
-        this._filePath = "";
+        this._fileType = "";
         this._fileBinData = "";
     }
 
@@ -23,12 +23,12 @@ class Coupon {
         this._companyName = companyName;
     }
 
-    getFilePath(){
-        return this._filePath;
+    getFileType(){
+        return this._fileType;
     }
 
-    setFilePath(filePath) {
-        this._filePath = filePath;
+    setFileType(fileType) {
+        this._fileType = fileType;
     }
 
     setFileBinData(fileBinData) {
