@@ -7,12 +7,12 @@ var CouponModel = require('../classes/couponModel');
 
 const Coupon = require('../classes/coupon.js');
 
-couponRouter.post('/newCoupon', function(req, res){
+couponRouter.post('/newCoupon', function(req, res,next){
   var coupons = [];
   var couponSession = req.session;
   var suser = couponSession.user;
   let user = new User();
-  
+
   user.setFisrstName(suser._firstName);
   user.setLastName(suser._lastName);
   user.setEmail(suser._email);
@@ -32,11 +32,12 @@ couponRouter.post('/newCoupon', function(req, res){
     CouponModel.find({}, function(err, couponsFromDB) {
       if (err) throw err;
       rtrieveAndDisplay(couponsFromDB,coupons,res, user);
+      next();
     });
   });
 });
 
-couponRouter.get('/myCoupons', function(req, res){
+couponRouter.get('/myCoupons', function(req, res,next){
   var coupons = [];
   var couponSession = req.session;
   var suser = couponSession.user;
@@ -50,7 +51,23 @@ couponRouter.get('/myCoupons', function(req, res){
   CouponModel.find({}, function(err, couponsFromDB) {
     if (err) throw err;
     rtrieveAndDisplay(couponsFromDB,coupons,res, user);
+    next();
   });
+});
+
+couponRouter.get('/dashboard', function(req, res, next) {
+  var couponSession = req.session;
+  var suser = couponSession.user;
+  let user = new User();
+
+  user.setFisrstName(suser._firstName);
+  user.setLastName(suser._lastName);
+  user.setEmail(suser._email);
+  user.setPassword(suser._password);
+
+    res.render('userDashbord',{
+      user:user
+    });
 });
 
 function rtrieveAndDisplay(couponsFromDB, coupons, res, user) {
