@@ -1,10 +1,11 @@
-var expressConfig = require('./controllers/systemController');
-var express = expressConfig();
+var systemConfig = require('./controllers/systemController');
+var express = systemConfig.expressModule();
 var bodyParser = require('body-parser');
 var fileUploadUtil = require('express-fileupload');
 var session = require('express-session');
 var favicon = require('serve-favicon');
 var path = require('path');
+var log = systemConfig.bunyanModule();
 
 var userRouter = require('./controllers/userController');
 var couponRouter = require('./controllers/couponController');
@@ -25,6 +26,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'html');
 
 app.get('/', function(req, res) {
+  log.info("%s","Lord Ganesh grace");
   res.render('home');
 });
 

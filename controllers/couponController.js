@@ -1,11 +1,11 @@
-var expressConfig = require('../controllers/systemController');
+var systemConfig = require('../controllers/systemController');
 const User = require('../classes/user');
-
-var express = expressConfig();
-var couponRouter = express.Router();
 var CouponModel = require('../classes/couponModel');
-
 const Coupon = require('../classes/coupon.js');
+
+var log = systemConfig.bunyanModule();
+var express = systemConfig.expressModule();
+var couponRouter = express.Router();
 
 couponRouter.post('/newCoupon', function(req, res,next){
   var coupons = [];

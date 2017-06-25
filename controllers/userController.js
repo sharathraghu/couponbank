@@ -1,8 +1,9 @@
-var expressConfig = require('../controllers/systemController');
-var express = expressConfig();
-var userRouter = express.Router();
-
+var systemConfig = require('../controllers/systemController');
 const User = require('../classes/user');
+
+var express = systemConfig.expressModule();
+var userRouter = express.Router();
+var log = systemConfig.bunyanModule();
 
 userRouter.post("/navToUserDashbord", function(req, res, next) {
   let user = new User();
