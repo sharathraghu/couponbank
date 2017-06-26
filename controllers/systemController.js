@@ -21,6 +21,8 @@ var log = new Logger({
 module.exports = {
     expressModule : function()
     { return express; },
-    bunyanModule: function()
-    { return log; }
+    loggerModule: function()
+    { return log; },
+    mongooseModule: function() 
+    { return mongoose; }
 }

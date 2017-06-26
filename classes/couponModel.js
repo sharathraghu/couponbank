@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+var systemConfig = require('../controllers/systemController');
+var mongoose = systemConfig.mongooseModule();
 var Schema = mongoose.Schema;
 
 var couponSchema = new Schema({

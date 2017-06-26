@@ -3,7 +3,7 @@ const User = require('../classes/user');
 var CouponModel = require('../classes/couponModel');
 const Coupon = require('../classes/coupon.js');
 
-var log = systemConfig.bunyanModule();
+var log = systemConfig.loggerModule();
 var express = systemConfig.expressModule();
 var couponRouter = express.Router();
 
