@@ -8,10 +8,6 @@ var log = new Logger({
   name: 'couponbankapi',
   streams: [
     {
-      stream: process.stdout,
-      level: 'debug'
-    },
-    {
       path: 'sysout.log',
       level: 'trace'
     }

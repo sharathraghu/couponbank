@@ -22,8 +22,7 @@ couponRouter.post('/newCoupon', function(req, res,next){
     {
       coupon_name : req.body.couponName,
       company_name : req.body.companyName,
-      file_type : req.files.exampleInputFile.mimetype,
-      binary_data : req.files.exampleInputFile.data
+      binary_data : req.body.exampleInputFile
     }
   );
 
@@ -75,7 +74,7 @@ function rtrieveAndDisplay(couponsFromDB, coupons, res, user) {
         let coupon = new Coupon();
         coupon.setCouponName(element.coupon_name);
         coupon.setCompanyName(element.company_name);
-        coupon.setFileBinData("data:"+element.file_type+";base64,"+element.binary_data.toString('base64'));
+        coupon.setFileBinData(element.binary_data);
         coupons.push(coupon);          
   });
   res.render('myCoupons', {

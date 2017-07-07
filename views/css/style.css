@@ -6,6 +6,10 @@
      margin-top: 10px;
 }
 
+#image-cropper {
+    text-align: center;
+}
+
 #animateProgress {
     display: none;
 }
@@ -13,4 +17,37 @@
 .progress-bar {
     -webkit-transition: none !important;
     transition: none !important;
+}
+
+input.cropit-image-input {
+  visibility: hidden;
+}
+
+.cropit-preview { 
+    background-color: #f8f8f8; 
+    background-size: cover;
+    border: 2px solid #ccc;
+    border-radius: 3px;
+    margin-top: 7px;
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+}
+
+.image-zoom-allignment {
+    width: 150px;
+    text-align: center;
+    padding: 0
+}
+.cropit-preview-background {
+  opacity: .2;
+  cursor: auto;
+}
+
+.cropit-preview-image-container {
+    cursor: move;
+}
+
+.image-size-label {
+   margin-top: 10px;
 }
