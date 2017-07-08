@@ -2,3 +2,4 @@
 /.vscode
 sysout.log
 /dist
+npm-debug.log
