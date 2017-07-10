@@ -1,4 +1,4 @@
-var systemConfig = require('../controllers/systemController');
+var systemConfig = require('./systemController');
 const User = require('../classes/user');
 var CouponModel = require('../classes/couponModel');
 const Coupon = require('../classes/coupon.js');

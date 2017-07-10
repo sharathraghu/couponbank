@@ -4,9 +4,14 @@ var Schema = mongoose.Schema;
 
 var couponSchema = new Schema({
     coupon_name :  String,
-    company_name: String,
+    coupon_categoty: String,
     binary_data: Buffer,
-    file_type: String
+    reviews: {
+        comments: String,
+        rating: String,
+        oneliner: String
+    },
+    user_id: String
 },  {collection: 'coupons'});
 
 var CouponModel = mongoose.model('coupons', couponSchema);

@@ -30,5 +30,8 @@
     "path": "^0.12.7",
     "serve-favicon": "^2.4.3",
     "superagent": "^3.5.2"
+  },
+  "devDependencies": {
+    "gulp-nodemon": "^2.2.1"
   }
 }
