@@ -32,6 +32,7 @@
     "superagent": "^3.5.2"
   },
   "devDependencies": {
-    "gulp-nodemon": "^2.2.1"
+    "gulp-nodemon": "^2.2.1",
+    "run-sequence": "^2.0.0"
   }
 }

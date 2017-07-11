@@ -21,7 +21,7 @@ couponRouter.post('/newCoupon', function(req, res,next){
   var newCoupon = new CouponModel(
     {
       coupon_name : req.body.couponName,
-      company_name : req.body.companyName,
+      coupon_categoty : req.body.couponCategory,
       binary_data : req.body.exampleInputFile
     }
   );
@@ -73,7 +73,7 @@ function rtrieveAndDisplay(couponsFromDB, coupons, res, user) {
   couponsFromDB.forEach(function(element) {
         let coupon = new Coupon();
         coupon.setCouponName(element.coupon_name);
-        coupon.setCompanyName(element.company_name);
+        coupon.setCouponCategory(element.coupon_categoty);
         coupon.setFileBinData(element.binary_data);
         coupons.push(coupon);          
   });

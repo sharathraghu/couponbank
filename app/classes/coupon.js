@@ -1,10 +1,12 @@
+let Review = require('./review');
+
 class Coupon {
 
     constructor() {
         this._couponName = "";
-        this._companyName = "";
-        this._fileType = "";
+        this._couponCategory = "";
         this._fileBinData = "";
+        this._reviews = Review;
     }
 
     getCouponName() {
@@ -15,28 +17,28 @@ class Coupon {
         this._couponName = couponName;
     }
 
-    getCompanyName() {
-        this._companyName;
+    getCouponCategory() {
+        return this._couponCategory;
     }
 
-    setCompanyName(companyName) {
-        this._companyName = companyName;
+    setCouponCategory(couponCategory) {
+        this._couponCategory = couponCategory;
     }
 
-    getFileType(){
-        return this._fileType;
-    }
-
-    setFileType(fileType) {
-        this._fileType = fileType;
+    getFileBinData() {
+        return this._fileBinData;
     }
 
     setFileBinData(fileBinData) {
         this._fileBinData = fileBinData;
     }
 
-    getFileBinData() {
-        return this._fileBinData;
+    getReviews() {
+        return this._reviews;
+    }
+
+    setReviews(reviews) {
+        this._reviews = reviews;
     }
 }
 module.exports = Coupon;
