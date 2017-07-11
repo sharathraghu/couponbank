@@ -1,12 +1,10 @@
-let Review = require('./review');
-
 class Coupon {
 
     constructor() {
         this._couponName = "";
         this._couponCategory = "";
         this._fileBinData = "";
-        this._reviews = Review;
+        this._reviews = new Array();
     }
 
     getCouponName() {

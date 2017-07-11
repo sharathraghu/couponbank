@@ -1,7 +1,8 @@
 var systemConfig = require('./systemController');
 const User = require('../classes/user');
 var CouponModel = require('../classes/couponModel');
-const Coupon = require('../classes/coupon.js');
+const Coupon = require('../classes/coupon');
+const Review = require('../classes/review');
 
 var log = systemConfig.loggerModule();
 var express = systemConfig.expressModule();
@@ -72,9 +73,11 @@ couponRouter.get('/dashboard', function(req, res, next) {
 function rtrieveAndDisplay(couponsFromDB, coupons, res, user) {
   couponsFromDB.forEach(function(element) {
         let coupon = new Coupon();
+
         coupon.setCouponName(element.coupon_name);
         coupon.setCouponCategory(element.coupon_categoty);
-        coupon.setFileBinData(element.binary_data);
+        coupon.setFileBinData(element.binary_data);  
+            
         coupons.push(coupon);          
   });
   res.render('myCoupons', {

@@ -6,11 +6,11 @@ var couponSchema = new Schema({
     coupon_name :  String,
     coupon_categoty: String,
     binary_data: Buffer,
-    reviews: {
+    reviews: [{
         comments: String,
         rating: String,
         oneliner: String
-    },
+    }],
     user_id: String
 },  {collection: 'coupons'});
 
