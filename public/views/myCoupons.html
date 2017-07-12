@@ -63,59 +63,94 @@
 						</ul>
 					</div>
 				</nav>
-				<% for(var index=0; index<coupons.length; index++) { %>
-				<div class="row top-margin">
-					<div class="col-md-4">
-						<img alt="Coupon Preview" src="<%=coupons[index].getFileBinData()%>" class="rounded img-thumbnail">
+				<div class="panel-group" id="panel-117590">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-117590" href="#panel-element-393295">My Coupons</a>
+						</div>
+						<div id="panel-element-393295" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<% for(var index=0; index<coupons.length; index++) { %>
+									<div class="row top-margin">
+										<div class="col-md-4">
+											<img alt="Coupon Preview" src="<%=coupons[index].getFileBinData()%>" class="rounded img-thumbnail">
+										</div>
+										<div class="col-md-4">
+											<dl>
+												<dt>
+													<%=coupons[index].getCouponName()%>
+												</dt>
+												<dd>
+													A description list is perfect for defining terms.
+												</dd>
+												<dt>
+													Euismod
+												</dt>
+												<dd>
+													Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
+												</dd>
+												<dd>
+													Donec id elit non mi porta gravida at eget metus.
+												</dd>
+												<dt>
+													Malesuada porta
+												</dt>
+												<dd>
+													Etiam porta sem malesuada magna mollis euismod.
+												</dd>
+												<dt>
+													Felis euismod semper eget lacinia
+												</dt>
+												<dd>
+													Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+												</dd>
+											</dl>
+										</div>
+										<div class="col-md-4">
+											<!-- <% for(var rIndex=0; rIndex<coupons[index].getReviews().length; rIndex++) { %> -->
+											<h2>
+												<!-- <%= coupons[index].getReviews()[rIndex].getOneliner() %> -->
+											</h2>
+											<p>
+												<!-- <%= coupons[index].getReviews()[rIndex].getComments() %> -->
+											</p>
+											<p>
+												<a class="btn" href="#">View details »</a>
+											</p>
+											<!-- <% } %> -->
+										</div>
+									</div>
+									<% } %>
+									<ul class="pagination">
+										<li>
+											<a href="#">Prev</a>
+										</li>
+										<%for(var pageIndex=1;pageIndex<=pagesToDisp;pageIndex++)  {%>
+											<li>
+												<a href="?page=<%=pageIndex%>>"><%=pageIndex%></a>
+											</li>
+										<% } %>																				
+										<li>
+											<a href="#">Next</a>
+										</li>
+									</ul>
+							</div>
+						</div>
 					</div>
-					<div class="col-md-4">
-						<dl>
-							<dt>
-								<%=coupons[index].getCouponName()%>
-							</dt>
-							<dd>
-								A description list is perfect for defining terms.
-							</dd>
-							<dt>
-								Euismod
-							</dt>
-							<dd>
-								Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
-							</dd>
-							<dd>
-								Donec id elit non mi porta gravida at eget metus.
-							</dd>
-							<dt>
-								Malesuada porta
-							</dt>
-							<dd>
-								Etiam porta sem malesuada magna mollis euismod.
-							</dd>
-							<dt>
-								Felis euismod semper eget lacinia
-							</dt>
-							<dd>
-								Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-							</dd>
-						</dl>
-					</div>
-					<div class="col-md-4">
-						<!-- <% for(var rIndex=0; rIndex<coupons[index].getReviews().length; rIndex++) { %> -->
-							<h2>
-								 <!-- <%= coupons[index].getReviews()[rIndex].getOneliner() %> -->
-							</h2>
-							<p>
-								<!-- <%= coupons[index].getReviews()[rIndex].getComments() %> -->
-							</p>
-							<p>
-								<a class="btn" href="#">View details »</a>
-							</p>
-						<!-- <% } %> -->
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<a class="panel-title" data-toggle="collapse" data-parent="#panel-117590" href="#panel-element-115579">Coupons Interested/Saved</a>
+						</div>
+						<div id="panel-element-115579" class="panel-collapse collapse in">
+							<div class="panel-body">
+								Anim pariatur cliche...
+							</div>
+						</div>
 					</div>
 				</div>
-				<% } %>
 			</div>
 		</div>
+	</div>
 	</div>
 	<div class="modal fade" id="modal-container-828" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
