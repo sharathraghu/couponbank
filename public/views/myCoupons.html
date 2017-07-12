@@ -123,15 +123,18 @@
 									<% } %>
 									<ul class="pagination">
 										<li>
-											<a href="#">Prev</a>
+											<a href="/myCoupons">First</a>
 										</li>
-										<%for(var pageIndex=1;pageIndex<=pagesToDisp;pageIndex++)  {%>
+										<li>
+											<a href="/myCoupons">1</a>
+										</li>
+										<%for(var pageIndex=2;pageIndex<=pagesToDisp-1;pageIndex++)  {%>
 											<li>
-												<a href="?page=<%=pageIndex%>>"><%=pageIndex%></a>
+												<a href="?page=<%=pageIndex%>"><%=pageIndex%></a>
 											</li>
 										<% } %>																				
 										<li>
-											<a href="#">Next</a>
+											<a href="?page=<%=pagesToDisp%>">Last</a>
 										</li>
 									</ul>
 							</div>
