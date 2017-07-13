@@ -12,7 +12,7 @@ var couponRouter = require('./app/controllers/couponController');
 
 var app = express();
 
-app.use("/asset", express.static(__dirname+'/dist/views'));
+app.use("/asset", express.static(__dirname+'/dist/views/'));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(fileUploadUtil());
 app.use(session({secret: 'CouponBank', resave: false, saveUninitialized: false, cookie: {maxAge: 1800000}, name:'id'}));

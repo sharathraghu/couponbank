@@ -94,7 +94,7 @@ function rtrieveAndDisplay(couponsFromDB, coupons, res, user, pagesToDisp) {
   res.render('myCoupons', {
     user: user,
     coupons: coupons,
-    pagesToDisp: pagesToDisp
+    pagesToDisp: Math.ceil(pagesToDisp)
   }); 
 }
 
