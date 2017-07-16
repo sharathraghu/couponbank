@@ -8,6 +8,9 @@
     "postinstall": "gulp build",
     "test": "mocha"
   },
+  "engines": {
+    "node": "6.11.1"
+  },
   "author": "SharathG",
   "license": "ISC",
   "dependencies": {
