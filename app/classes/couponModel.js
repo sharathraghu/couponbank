@@ -11,7 +11,8 @@ var couponSchema = new Schema({
         rating: String,
         oneliner: String
     }],
-    user_id: String
+    user_id: String,
+    coupon_tag: String
 },  {collection: 'coupons'});
 
 var CouponModel = mongoose.model('coupons', couponSchema);

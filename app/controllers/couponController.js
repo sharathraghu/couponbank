@@ -25,19 +25,21 @@ couponRouter.post('/newCoupon', function (req, res, next) {
     {
       coupon_name: req.body.couponName,
       coupon_categoty: req.body.couponCategory,
-      binary_data: req.body.exampleInputFile
+      binary_data: req.body.exampleInputFile,
+      user_id : user.getEmail(),
+      coupon_tag: 'uploaded'
     }
   );
 
   newCoupon.save(function (err) {
     if (err) throw err;
-    CouponModel.find({}, function (err, couponsFromDB) {
+    CouponModel.find({$and: [{user_id:user.getEmail()}, {coupon_tag: 'uploaded'}]}, function (err, couponsFromDB) {
       if (err) throw err;
       CouponModel.count({}, function (err, count) {
-      pagesToDisp = count / perPageLimit;
-      rtrieveAndDisplay(couponsFromDB, coupons, res, user, pagesToDisp);
-      next();
-    });  
+        pagesToDisp = count / perPageLimit;
+        rtrieveAndDisplay(couponsFromDB, coupons, res, user, pagesToDisp);
+        next();
+      });
     });
   });
 });
@@ -56,13 +58,13 @@ couponRouter.get('/myCoupons', function (req, res, next) {
   user.setEmail(suser._email);
   user.setPassword(suser._password);
 
-  CouponModel.find({}, {}, { limit: perPageLimit, skip: (perPageLimit * pageNum) }, function (err, couponsFromDB) {
+  CouponModel.find({$and: [{user_id:user.getEmail()}, {coupon_tag: 'uploaded'}]}, {}, { limit: perPageLimit, skip: (perPageLimit * pageNum) }, function (err, couponsFromDB) {
     if (err) throw err;
     CouponModel.count({}, function (err, count) {
       pagesToDisp = count / perPageLimit;
       rtrieveAndDisplay(couponsFromDB, coupons, res, user, pagesToDisp);
       next();
-    });    
+    });
   });
 });
 
@@ -95,7 +97,7 @@ function rtrieveAndDisplay(couponsFromDB, coupons, res, user, pagesToDisp) {
     user: user,
     coupons: coupons,
     pagesToDisp: Math.ceil(pagesToDisp)
-  }); 
+  });
 }
 
 module.exports = couponRouter;
