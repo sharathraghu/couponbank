@@ -1,8 +1,9 @@
 class Review {
+
     constructor() {
-        this._comments = "",
-        this._rating = "",
-        this._oneliner =""
+        this._comments = "";
+        this._rating = "";
+        this._oneliner ="";
     }
 
     getComments() {

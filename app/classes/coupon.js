@@ -4,7 +4,7 @@ class Coupon {
         this._couponName = "";
         this._couponCategory = "";
         this._fileBinData = "";
-        this._reviews = new Array();
+        this._reviews = [];
     }
 
     getCouponName() {

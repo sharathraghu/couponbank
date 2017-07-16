@@ -6,6 +6,7 @@ var session = require('express-session');
 var favicon = require('serve-favicon');
 var path = require('path');
 var log = systemConfig.loggerModule();
+var properties = require('./app/config/properties');
 
 var userRouter = require('./app/controllers/userController');
 var couponRouter = require('./app/controllers/couponController');
@@ -24,6 +25,8 @@ app.engine('.html', require('ejs').__express);
 
 app.set('views', __dirname + '/dist/views');
 app.set('view engine', 'html');
+var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+systemConfig.mongooseModule().connect(properties[env].mongoDBURL);
 
 app.get('/', function(req, res) {
   log.info("%s","Lord Ganesh grace");
