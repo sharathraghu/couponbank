@@ -67,7 +67,7 @@ gulp.task('nodemon', function(){
         ignore: ['./dist/'],
         tasks: ['build'],
         watch: ['./public/*.*','./app/*.*'],
-        stdout: false
+        stdout: true
     }).on('readable', function() {
 
         // free memory

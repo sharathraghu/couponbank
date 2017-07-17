@@ -19,7 +19,6 @@ couponRouter.post('/newCoupon', function (req, res, next) {
   user.setFisrstName(suser._firstName);
   user.setLastName(suser._lastName);
   user.setEmail(suser._email);
-  user.setPassword(suser._password);
 
   var newCoupon = new CouponModel(
     {
@@ -56,7 +55,6 @@ couponRouter.get('/myCoupons', function (req, res, next) {
   user.setFisrstName(suser._firstName);
   user.setLastName(suser._lastName);
   user.setEmail(suser._email);
-  user.setPassword(suser._password);
 
   CouponModel.find({$and: [{user_id:user.getEmail()}, {coupon_tag: 'uploaded'}]}, {}, { limit: perPageLimit, skip: (perPageLimit * pageNum) }, function (err, couponsFromDB) {
     if (err) throw err;
@@ -76,7 +74,6 @@ couponRouter.get('/dashboard', function (req, res, next) {
   user.setFisrstName(suser._firstName);
   user.setLastName(suser._lastName);
   user.setEmail(suser._email);
-  user.setPassword(suser._password);
 
   res.render('userDashbord', {
     user: user

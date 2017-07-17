@@ -13,42 +13,69 @@ userRouter.post("/navToUserDashbord", function (req, res, next) {
   if (req.body.usrt === 'n') {
     var newUser = new UserModel({
       first_name: req.body.firstName,
-      last_name : req.body.lastName,
-      email : req.body.exampleInputEmail1,
-      password : req.body.exampleInputPassword1
+      last_name: req.body.lastName,
+      email: req.body.exampleInputEmail1,
+      password: req.body.exampleInputPassword1
     });
 
     user.setFisrstName(req.body.firstName);
     user.setLastName(req.body.lastName);
     user.setEmail(req.body.exampleInputEmail1);
 
-    newUser.save(function(err) {
+    newUser.save(function (err) {
       if (err) throw err;
       couponSession.user = user;
       navigateToUsrDashboard(res, user);
       next();
     });
   } else {
-    UserModel.findOne({email:req.body.exampleInputEmail1}, function(err, userDB) {
-      if(err) throw err;
-      if(userDB !=null && userDB.password === req.body.exampleInputPassword1) {
+    UserModel.findOne({ email: req.body.exampleInputEmail1 }, function (err, userDB) {
+      if (err) throw err;
+      if (userDB != null && userDB.password === req.body.exampleInputPassword1) {
         user.setFisrstName(userDB.first_name);
         user.setLastName(userDB.last_name);
         user.setEmail(userDB.email);
         couponSession.user = user;
         navigateToUsrDashboard(res, user);
       } else {
-         res.render('home');
+        res.render('home');
       }
       next();
     });
   }
-    
+
 });
 
-userRouter.post('/forgotPassword', function (req, res, next) {
-  res.render('home');
+userRouter.get('/userprofile', function (req, res, next) {
+  var couponSession = req.session;
+  var suser = couponSession.user;
+  let user = new User();
+
+  user.setFisrstName(suser._firstName);
+  user.setLastName(suser._lastName);
+  user.setEmail(suser._email);
+
+  res.render('userprofile', {
+    user: user
+  });
   next();
+});
+
+userRouter.post('/updateProfile', function (req, res, next) {
+  var couponSession = req.session;
+  var suser = couponSession.user;
+  let user = new User();
+
+  user.setFisrstName(suser._firstName);
+  user.setLastName(suser._lastName);
+  user.setEmail(suser._email);
+
+  UserModel.update({ email: user.getEmail() }, {$set:{ password: req.body.inputPassword2} }, function (err, rowsAffected) {
+    if (err) throw err;
+    res.render('userDashbord', {
+      user: user
+    });
+  });
 });
 
 userRouter.get('/userLogout', function (req, res, next) {
