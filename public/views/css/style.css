@@ -51,3 +51,18 @@ input.cropit-image-input {
 .image-size-label {
    margin-top: 10px;
 }
+
+#imageHover:hover img{
+    opacity: 0.5;
+}
+
+#imageHover:hover input{
+    display:block;
+    position: absolute;
+    top: 80%;
+    left:50%;
+}
+
+.editBtn{
+    display: none;
+}
