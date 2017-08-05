@@ -3,3 +3,4 @@
 sysout.log
 /dist
 npm-debug.log
+.DS_Store
