@@ -1,3 +1,13 @@
+@import './bootstrap/stylesheets/bootstrap';
+@import 'cssresets';
+@import 'variables';
+
+@import 'font';
+
+* {
+    font-family: Manifesto;
+}
+
 .top-margin {
     margin-top: 10px;
 }
@@ -52,17 +62,17 @@ input.cropit-image-input {
    margin-top: 10px;
 }
 
-#imageHover:hover img{
+.imageHover:hover img{
     opacity: 0.5;
 }
 
-#imageHover:hover input{
+.editBtn:hover input{
     display:block;
-    position: absolute;
-    top: 80%;
-    left:50%;
 }
 
 .editBtn{
     display: none;
+    position: absolute;
+    top: 50%;
+    left:50%;
 }

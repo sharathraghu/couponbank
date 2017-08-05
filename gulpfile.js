@@ -7,14 +7,16 @@ var del = require('del');
 var nodemon = require('gulp-nodemon');
 var runSequence = require('run-sequence');
 var spawn   = require('child_process').spawn;
-var bunyan = require('bunyan'); 
+var bunyan = require('bunyan');
+var sass = require('gulp-sass');
 
 gulp.task('clean', function () {
     return del(['dist']);
 });
 
 gulp.task('css', function () {
-    return gulp.src(['public/views/css/style.css'])
+    return gulp.src(['public/views/sass/style.scss'])
+        .pipe(sass())
         .pipe(minifyCSS())
         .pipe(gulp.dest('dist/views/css'));
 });
@@ -36,13 +38,8 @@ gulp.task('html', function () {
         .pipe(gulp.dest('dist/views'));
 });
 
-gulp.task('copyCSS', function () {
-    return gulp.src(['public/views/css/bootstrap-theme.min.css', 'public/views/css/bootstrap.min.css'])
-        .pipe(gulp.dest('dist/views/css'));
-});
-
 gulp.task('copyFont', function () {
-    return gulp.src(['public/views/fonts/*.*'])
+    return gulp.src(['public/views/fonts/**/*.*'])
         .pipe(gulp.dest('dist/views/fonts'));
 });
 
@@ -52,7 +49,7 @@ gulp.task('copyImgs', function () {
 });
 
 gulp.task('copyJs', function () {
-    return gulp.src(['public/views/js/bootstrap.min.js', 'public/views/js/jquery.cropit.js', 'public/views/js/jquery.min.js'])
+    return gulp.src(['public/views/js/*.*'])
         .pipe(gulp.dest('dist/views/js'));
 });
 
@@ -87,7 +84,7 @@ gulp.task('nodemon', function(){
 });
 
 gulp.task('build', function(done) {
-    runSequence('clean','copyCSS', 'copyJs','copyFont', 'copyImgs', 'lint', 'css', 'scripts', 'html', done);
+    runSequence('clean', 'copyJs','copyFont', 'copyImgs', 'lint', 'css', 'scripts', 'html', done);
 });
 
 gulp.task('dev', function (done) {

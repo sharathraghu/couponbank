@@ -4,3 +4,5 @@ sysout.log
 /dist
 npm-debug.log
 .DS_Store
+/public/views/sass/style.css.map
+/public/views/sass/.sass-cache/
