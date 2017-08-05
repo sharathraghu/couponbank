@@ -3,3 +3,5 @@
 sysout.log
 /dist
 npm-debug.log
+/public/views/sass/style.css.map
+/public/views/sass/.sass-cache/
