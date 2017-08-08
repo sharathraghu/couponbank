@@ -5,7 +5,7 @@
 @import 'coupontheme';
 
 body {
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: $font-family;
 }
 
 .top-margin {
@@ -62,17 +62,53 @@ input.cropit-image-input {
    margin-top: 10px;
 }
 
-.imageHover:hover img{
-    opacity: 0.5;
+.profileImage img {
+    transform:scale(1);
+    -ms-transform:scale(1);
+    -moz-transform:scale(1);
+    -webkit-transform:scale(1);
+    -o-transform:scale(1);
+	-webkit-transition: all 1s ease;
+  	-moz-transition: all 1s ease;
+  	-o-transition: all 1s ease;
+  	transition: all 1s ease;
 }
 
-.editBtn:hover input{
-    display:block;
+.profileBox:hover .profileImage img {    
+	cursor: pointer;
+    transform:scale(1.5);
+    -ms-transform:scale(1.5);
+    -moz-transform:scale(1.5);
+    -webkit-transform:scale(1.5);
+    -o-transform:scale(1.5);
 }
 
 .editBtn{
-    display: none;
+    position: absolute;    
+    width: 100%;
+    height: 100%;
+    top: 0;
+    -webkit-transition: all 2s ease;
+  	-moz-transition: all 2s ease;
+  	-o-transition: all 2s ease;
+  	transition: all 2s ease;
+}
+
+.editBtn:hover{
+    background: rgba(255, 255, 255, 0.5);    
+}
+
+.editBtn input{
     position: absolute;
-    top: 50%;
-    left:50%;
+    top: -100%;
+    left: 40%;
+     -webkit-transition: all 1s ease;
+  	-moz-transition: all 1s ease;
+  	-o-transition: all 1s ease;
+  	transition: all 1s ease;
+}
+
+.editBtn:hover input{    
+    top: 40%;
+    left: 40%;
 }
