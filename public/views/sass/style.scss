@@ -1,11 +1,11 @@
-@import './bootstrap/stylesheets/bootstrap';
 @import 'cssresets';
-@import 'variables';
-
 @import 'font';
+@import 'variables';
+@import './bootstrap/stylesheets/bootstrap';
+@import 'coupontheme';
 
 body {
-    font-family: 'Josefin Sans', sans-serif;;
+    font-family: 'Josefin Sans', sans-serif;
 }
 
 .top-margin {
