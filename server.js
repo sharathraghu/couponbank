@@ -10,14 +10,16 @@ var properties = require('./app/config/properties');
 
 var userRouter = require('./app/controllers/userController');
 var couponRouter = require('./app/controllers/couponController');
+var CouponModel = require('./app/classes/couponModel');
+const Coupon = require('./app/classes/coupon');
 
 var app = express();
 
-app.use("/asset", express.static(__dirname+'/dist/'));
-app.use(bodyParser.urlencoded({extended:false}));
+app.use("/asset", express.static(__dirname + '/dist/'));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(fileUploadUtil());
-app.use(session({secret: 'CouponBank', resave: false, saveUninitialized: false, cookie: {maxAge: 1800000}, name:'id'}));
-app.use(favicon(path.join(__dirname,'favicon.ico')));
+app.use(session({ secret: 'CouponBank', resave: false, saveUninitialized: false, cookie: { maxAge: 1800000 }, name: 'id' }));
+app.use(favicon(path.join(__dirname, 'favicon.ico')));
 
 app.use(userRouter, couponRouter);
 
@@ -28,9 +30,25 @@ app.set('view engine', 'html');
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 systemConfig.mongooseModule().connect(properties[env].mongoDBURL);
 
-app.get('/', function(req, res) {
-  log.info("%s","Lord Ganesh grace");
-  res.render('home');
+app.get('/', function (req, res, next) {
+  log.info("%s", "Lord Ganesh grace");
+  var coupons = [];
+  CouponModel.find({}, {}, {}, function (err, couponsFromDB) {
+    if (err) throw err;
+    couponsFromDB.forEach(function (element) {
+      let coupon = new Coupon();
+
+      coupon.setCouponName(element.coupon_name);
+      coupon.setCouponCategory(element.coupon_categoty);
+      coupon.setFileBinData(element.binary_data);
+
+      coupons.push(coupon);
+    });
+    res.render('home', {
+      coupons: coupons
+    });
+    next();
+  });
 });
 
 var port = (process.env.PORT === undefined) ? '9088' : process.env.PORT;
