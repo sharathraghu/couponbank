@@ -1,6 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var Logger = require('bunyan');
+var BBPromise = require("bluebird");
 
 var log = new Logger({
   name: 'couponbankapi',
@@ -22,5 +23,9 @@ module.exports = {
   loggerModule: function ()
   { return log; },
   mongooseModule: function ()
-  { return mongoose; }
+  { 
+    BBPromise.promisifyAll(mongoose);
+    mongoose.Promise = BBPromise;
+    return mongoose; 
+  }
 };
