@@ -1,32 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Coupon Bank</title>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="description" content="Source code generated using layoutit.com">
-    <meta name="author" content="LayoutIt!">
+	<title>Coupon Bank</title>
 
-    <link href="asset/css/style.css" rel="stylesheet">
+	<meta name="description" content="Source code generated using layoutit.com">
+	<meta name="author" content="LayoutIt!">
+
+	<link href="asset/css/style.css" rel="stylesheet">
 	<link rel="icon" href="asset/imgs/favicon.ico" type="image/x-icon" />
 	<link rel="shortcut icon" href="asset/imgs/favicon.ico" type="image/x-icon" />
-	
-  </head>
-  <body>
-    <div class="container-fluid">
+
+</head>
+
+<body>
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
 				<nav class="navbar navbar-default" role="navigation">
-					<div class="navbar-header">					 
+					<div class="navbar-header">
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 							<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 						</button> <a class="navbar-brand" href="#">Coupon Bank</a>
 					</div>
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-						<ul class="nav navbar-nav">						
+						<ul class="nav navbar-nav">
 							<li>
 								<a href="/myCoupons">My Coupons</a>
 							</li>
@@ -35,13 +37,13 @@
 							</li>
 							<li>
 								<a id="modal-828" href="asset/views/newCoupons.html" role="button" data-toggle="modal" data-target="#modal-container-828">New Coupon Upload</a>
-							</li>						
-						</ul>					
-						<ul class="nav navbar-nav navbar-right">						
+							</li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
 							<li>
 								<a href="#"><small>Welcome Back</small> <%=user.getFirstName() + ' ' + user.getLastName()%></a>
-							</li>						
-							<li class="dropdown">							
+							</li>
+							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">User Actions<strong class="caret"></strong></a>
 								<ul class="dropdown-menu">
 									<li>
@@ -49,7 +51,7 @@
 									</li>
 									<li>
 										<a href="#">Account Settings</a>
-									</li>								
+									</li>
 									<li class="divider"></li>
 									<li>
 										<a href="/userLogout">Logout</a>
@@ -57,59 +59,59 @@
 								</ul>
 							</li>
 						</ul>
-					</div>				
+					</div>
 				</nav>
-				<div class="page-header">
+				<div class="page-header text-center">
 					<h1>
 						Coupon Bank Welcomes you!!!
-					</h1>			
+					</h1>
 				</div>
 				<div class="row">
-					<div class="col-md-4">
-						<div class="thumbnail">
-							<img alt="Bootstrap Thumbnail First" src="http://lorempixel.com/output/people-q-c-600-200-1.jpg">
-							<div class="caption">
-								<h3>
-									Thumbnail label
+					<div class="col-md-9 col-md-offset-1">
+						<div class="row">
+							<div class="thumbnail">
+								<h3 class="text-center text-info">
+									Recent Activity
 								</h3>
-								<p>
-									Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-								</p>
-								<p>
-									<a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
-								</p>
+								<div class="carousel slide" id="carousel-202118">
+									<div class="carousel-inner">
+										<% for(var index=0; index<coupons.length; index++) { %>
+										<div class="item">
+											<img alt="Coupon Preview" src="<%=coupons[index].getFileBinData()%>" class="rounded img-thumbnail">
+											<div class="carousel-caption">
+												<h4>
+													<%=coupons[index].getCouponName()%>
+												</h4>
+												<p>
+													<%=coupons[index].getCouponCategory()%>
+												</p>
+											</div>
+										</div>
+										<% } %>
+									</div>
+										<a class="left carousel-control" href="#carousel-202118" data-slide="prev">
+											<span class="glyphicon glyphicon-chevron-left"></span>
+										</a>
+										<a class="right carousel-control" href="#carousel-202118" data-slide="next">
+											<span class="glyphicon glyphicon-chevron-right"></span>
+										</a>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="thumbnail">
-							<img alt="Bootstrap Thumbnail Second" src="http://lorempixel.com/output/city-q-c-600-200-1.jpg">
-							<div class="caption">
-								<h3>
-									Thumbnail label
-								</h3>
-								<p>
-									Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-								</p>
-								<p>
-									<a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="thumbnail">
-							<img alt="Bootstrap Thumbnail Third" src="http://lorempixel.com/output/sports-q-c-600-200-1.jpg">
-							<div class="caption">
-								<h3>
-									Thumbnail label
-								</h3>
-								<p>
-									Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-								</p>
-								<p>
-									<a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
-								</p>
+						<div class="row">
+							<div class="thumbnail">
+								<div class="caption">
+									<h3>
+										Suggestions
+									</h3>
+									<p>
+										Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id
+										dolor id nibh ultricies vehicula ut id elit.
+									</p>
+									<p>
+										<a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
+									</p>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -123,8 +125,9 @@
 			</div>
 		</div>
 	</div>
-    <script src="asset/js/jquery.min.js"></script>
-    <script src="asset/js/bootstrap.min.js"></script>
-    <script src="asset/js/scripts.js"></script>
-  </body>
+	<script src="asset/js/jquery.min.js"></script>
+	<script src="asset/js/bootstrap.min.js"></script>
+	<script src="asset/js/scripts.js"></script>
+</body>
+
 </html>
