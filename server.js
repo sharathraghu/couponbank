@@ -11,6 +11,7 @@ var properties = require('./app/config/properties');
 var userRouter = require('./app/controllers/userController');
 var couponRouter = require('./app/controllers/couponController');
 const CouponService = require('./app/services/couponService');
+const Coupon = require('./app/classes/coupon');
 
 var app = express();
 
@@ -27,15 +28,26 @@ app.engine('.html', require('ejs').__express);
 app.set('views', __dirname + '/dist/views');
 app.set('view engine', 'html');
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-systemConfig.mongooseModule().connect(properties[env].mongoDBURL,{useMongoClient: true});
+systemConfig.mongooseModule().connect(properties[env].mongoDBURL, { useMongoClient: true });
 
 app.get('/', function (req, res, next) {
-  log.info("%s", "Lord Ganesh grace");
-  var coupons = [];
-  let couponService = new CouponService()
-  coupons = couponService.getAllCoupons();
-  res.render('home', {
-    coupons: coupons
+  log.info("%s", "Lord Ganesh grace");  
+  let couponService = new CouponService();
+  couponService.getAllCoupons().then(function (couponsFromDB) {
+    var coupons = [];
+    couponsFromDB.forEach(function (element) {
+      let coupon = new Coupon();
+
+      coupon.setCouponName(element.coupon_name);
+      coupon.setCouponCategory(element.coupon_categoty);
+      coupon.setFileBinData(element.binary_data);
+      coupons.push(coupon);
+    });
+    res.render('home', {
+      coupons: coupons
+    });
+  }).catch(function (err) {    
+    throw err;
   });
 });
 
