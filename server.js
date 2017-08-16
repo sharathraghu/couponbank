@@ -11,7 +11,6 @@ var properties = require('./app/config/properties');
 var userRouter = require('./app/controllers/userController');
 var couponRouter = require('./app/controllers/couponController');
 const CouponService = require('./app/services/couponService');
-const Coupon = require('./app/classes/coupon');
 
 var app = express();
 

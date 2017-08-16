@@ -76,25 +76,29 @@
 								<div class="carousel slide" id="carousel-202118">
 									<div class="carousel-inner">
 										<% for(var index=0; index<coupons.length; index++) { %>
-										<div class="item">
-											<img alt="Coupon Preview" src="<%=coupons[index].getFileBinData()%>" class="rounded img-thumbnail">
-											<div class="carousel-caption">
-												<h4>
-													<%=coupons[index].getCouponName()%>
-												</h4>
-												<p>
-													<%=coupons[index].getCouponCategory()%>
-												</p>
+											<div class="item<%= index == 0 ? ' active' : '' %>">
+												<div class="row">
+													<div class="col-sm-8">
+														<img alt="Coupon Preview" src="<%=coupons[index].getFileBinData()%>" class="rounded img-thumbnail">
+														<div class="carousel-caption">
+															<h4>
+																<%=coupons[index].getCouponName()%>
+															</h4>
+															<p>
+																<%=coupons[index].getCouponCategory()%>
+															</p>
+														</div>
+													</div>
+												</div>
 											</div>
-										</div>
-										<% } %>
+											<% } %>
 									</div>
-										<a class="left carousel-control" href="#carousel-202118" data-slide="prev">
+									<a class="left carousel-control" href="#carousel-202118" data-slide="prev">
 											<span class="glyphicon glyphicon-chevron-left"></span>
-										</a>
-										<a class="right carousel-control" href="#carousel-202118" data-slide="next">
+									</a>
+									<a class="right carousel-control" href="#carousel-202118" data-slide="next">
 											<span class="glyphicon glyphicon-chevron-right"></span>
-										</a>
+									</a>
 								</div>
 							</div>
 						</div>

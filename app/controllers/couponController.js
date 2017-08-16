@@ -30,8 +30,8 @@ couponRouter.post('/newCoupon', function (req, res, next) {
 
   couponService.saveNewCoupon(newCoupon).then(function (product) {
     couponService.getCouponsByEmailIdAndTag(user.getEmail(), 'uploaded', perPageLimit, pageNum).then(function (coupons) {
-      couponService.getCouponsByEmailIdAndTag().then(function (count) {
-        pagesToDisp = (count.length) / perPageLimit;
+      couponService.getTotalCouponCountByEmailAndTag(user.getEmail(), 'uploaded').then(function (count) {
+        pagesToDisp = count / perPageLimit;
         rtrieveAndDisplay(coupons, res, user, pagesToDisp);
       }).catch(function (err) {
         throw err;
@@ -59,8 +59,8 @@ couponRouter.get('/myCoupons', function (req, res, next) {
   user.setEmail(suser._email);
 
   couponService.getCouponsByEmailIdAndTag(user.getEmail(), 'uploaded', perPageLimit, pageNum).then(function (coupons) {
-    couponService.getCouponsByEmailIdAndTag(user.getEmail(), 'uploaded').then(function (count) {
-      pagesToDisp = (count.length) / perPageLimit;
+    couponService.getTotalCouponCountByEmailAndTag(user.getEmail(), 'uploaded').then(function (count) {
+      pagesToDisp = count / perPageLimit;
       rtrieveAndDisplay(coupons, res, user, pagesToDisp);
     }).catch(function (err) {
       throw err;
@@ -75,13 +75,19 @@ couponRouter.get('/dashboard', function (req, res, next) {
   var couponSession = req.session;
   var suser = couponSession.user;
   let user = new User();
+  let couponService = new CouponService();
 
   user.setFisrstName(suser._firstName);
   user.setLastName(suser._lastName);
   user.setEmail(suser._email);
 
-  res.render('userDashbord', {
-    user: user
+  couponService.getAllCoupons().then(function (coupons) {
+    res.render('userDashbord', {
+      user: user,
+      coupons: coupons
+    });
+  }).catch(function (err) {
+    throw err;
   });
 });
 
