@@ -33,16 +33,7 @@ systemConfig.mongooseModule().connect(properties[env].mongoDBURL, { useMongoClie
 app.get('/', function (req, res, next) {
   log.info("%s", "Lord Ganesh grace");  
   let couponService = new CouponService();
-  couponService.getAllCoupons().then(function (couponsFromDB) {
-    var coupons = [];
-    couponsFromDB.forEach(function (element) {
-      let coupon = new Coupon();
-
-      coupon.setCouponName(element.coupon_name);
-      coupon.setCouponCategory(element.coupon_categoty);
-      coupon.setFileBinData(element.binary_data);
-      coupons.push(coupon);
-    });
+  couponService.getAllCoupons().then(function (coupons) {
     res.render('home', {
       coupons: coupons
     });
