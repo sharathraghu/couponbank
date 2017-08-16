@@ -28,6 +28,16 @@ class UserService {
             });
         });
     }
+
+    updateUserPasswordUsingEmail(email, password) {
+        return new BBPromise(function (resolve, reject) {
+            UserModel.update({ email: email }, { $set: { password: password } }).then( function (rowsAffected) {
+                resolve(rowsAffected);
+            }).catch(function(err){
+                reject(err);
+            });
+        });
+    }
 }
 
 module.exports = UserService;

@@ -33,7 +33,7 @@ userRouter.post("/navToUserDashbord", function (req, res, next) {
         couponSession.user = user;
         navigateToUsrDashboard(res, user);
       } else {
-        navigateToUsrDashboard(res, user);
+        navigateToHome(req, res);
       }
     }).catch(function (err) {
       throw err;
@@ -61,20 +61,22 @@ userRouter.post('/updateProfile', function (req, res, next) {
   var couponSession = req.session;
   var suser = couponSession.user;
   let user = new User();
+  let userService = new UserService();
 
   user.setFisrstName(suser._firstName);
   user.setLastName(suser._lastName);
   user.setEmail(suser._email);
 
-  UserModel.update({ email: user.getEmail() }, { $set: { password: req.body.inputPassword2 } }, function (err, rowsAffected) {
-    if (err) throw err;
-    res.render('userDashbord', {
-      user: user
-    });
+  userService.updateUserPasswordUsingEmail(user.getEmail(), req.body.inputPassword2).then(function (rowsAffected) {
+    navigateToUsrDashboard(res, user);
   });
 });
 
 userRouter.get('/userLogout', function (req, res, next) {
+  navigateToHome(req, res);
+});
+
+function navigateToHome(req, res) {
   var couponSession = req.session;
   let couponService = new CouponService();
 
@@ -86,11 +88,11 @@ userRouter.get('/userLogout', function (req, res, next) {
     res.render('home', {
       coupons: coupons
     });
+    return null;
   }).catch(function (err) {
     throw err;
   });
-
-});
+}
 
 function navigateToUsrDashboard(res, user) {
   let couponService = new CouponService();
