@@ -5,6 +5,8 @@ class Coupon {
         this._couponCategory = "";
         this._fileBinData = "";
         this._reviews = [];
+        this._email ="";
+        this._couponTag = "";
     }
 
     getCouponName() {
@@ -37,6 +39,22 @@ class Coupon {
 
     setReviews(reviews) {
         this._reviews = reviews;
+    }
+
+    getEmail() {
+        return this._email;
+    }
+
+    setEmail(email) {
+        this._email = email;
+    }
+
+    getCouponTag() {
+        return this._couponTag;
+    }
+
+    setCouponTag(couponTag) {
+        this._couponTag = couponTag;
     }
 }
 module.exports = Coupon;
