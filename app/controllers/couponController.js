@@ -91,6 +91,18 @@ couponRouter.get('/dashboard', function (req, res, next) {
   });
 });
 
+couponRouter.post('/searchCoupon', function (req, res) {
+  let couponService = new CouponService();
+
+  couponService.searchCoupon(req.body.couponSrchBox).then(function (coupons) {
+    res.render('home', {
+      coupons: coupons
+    });
+  }).catch(function (err) {
+    throw err;
+  });
+});
+
 function rtrieveAndDisplay(coupons, res, user, pagesToDisp) {
   res.render('myCoupons', {
     user: user,

@@ -40,30 +40,50 @@ class CouponService {
         });
     }
 
-    getCouponsByEmailIdAndTag(email, tag, perPageLimit, pageNum){
-        return new BBPromise(function(resolve, reject) {
-            CouponModel.find({$and: [{user_id:email}, {coupon_tag: tag}]},{}, { limit: perPageLimit, skip: (perPageLimit * pageNum)}).exec().then(function(couponsFromDB) {
+    getCouponsByEmailIdAndTag(email, tag, perPageLimit, pageNum) {
+        return new BBPromise(function (resolve, reject) {
+            CouponModel.find({ $and: [{ user_id: email }, { coupon_tag: tag }] }, {}, { limit: perPageLimit, skip: (perPageLimit * pageNum) }).exec().then(function (couponsFromDB) {
                 var coupons = [];
                 couponsFromDB.forEach(function (element) {
                     let coupon = new Coupon();
-                
+
                     coupon.setCouponName(element.coupon_name);
                     coupon.setCouponCategory(element.coupon_categoty);
                     coupon.setFileBinData(element.binary_data);
-                
+
                     coupons.push(coupon);
-                  });   
-                resolve(coupons);      
-            }).catch(function(err){
+                });
+                resolve(coupons);
+            }).catch(function (err) {
                 reject(err);
             });
         });
     }
 
     getTotalCouponCountByEmailAndTag(email, tag) {
-        return new BBPromise(function(resolve, reject){
-            CouponModel.count({$and: [{user_id:email}, {coupon_tag: tag}]}).exec().then(function(count){
+        return new BBPromise(function (resolve, reject) {
+            CouponModel.count({ $and: [{ user_id: email }, { coupon_tag: tag }] }).exec().then(function (count) {
                 resolve(count);
+            }).catch(function (err) {
+                reject(err);
+            });
+        });
+    }
+
+    searchCoupon(key) {
+        return new BBPromise(function (resolve, reject) {
+            CouponModel.find({ $or: [{ coupon_name: key }, { coupon_categoty: key }] }, {}).exec().then(function (couponsFromDB) {
+                var coupons = [];
+                couponsFromDB.forEach(function (element) {
+                    let coupon = new Coupon();
+
+                    coupon.setCouponName(element.coupon_name);
+                    coupon.setCouponCategory(element.coupon_categoty);
+                    coupon.setFileBinData(element.binary_data);
+
+                    coupons.push(coupon);
+                });
+                resolve(coupons);
             }).catch(function(err){
                 reject(err);
             });
