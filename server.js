@@ -3,10 +3,14 @@ var express = systemConfig.expressModule();
 var bodyParser = require('body-parser');
 var fileUploadUtil = require('express-fileupload');
 var session = require('express-session');
+var redis = require('redis');
+var redisStore = require('connect-redis')(session);
+var redisClient  = redis.createClient();
 var favicon = require('serve-favicon');
 var path = require('path');
 var log = systemConfig.loggerModule();
 var properties = require('./app/config/properties');
+var csurf = require("csurf");
 
 var userRouter = require('./app/controllers/userController');
 var couponRouter = require('./app/controllers/couponController');
@@ -17,10 +21,12 @@ var app = express();
 app.use("/asset", express.static(__dirname + '/dist/'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(fileUploadUtil());
-app.use(session({ secret: 'CouponBank', resave: false, saveUninitialized: false, cookie: { maxAge: 1800000 }, name: 'id' }));
+app.use(session({ store: new redisStore({host: 'localhost', port: 6379, client: redisClient}), secret: 'CouponBank', resave: false, saveUninitialized: false, cookie: { maxAge: 1800000 }, name: 'id' }));
+app.use(csurf());
 app.use(favicon(path.join(__dirname, 'favicon.ico')));
 
 app.use(userRouter, couponRouter);
+
 
 app.engine('.html', require('ejs').__express);
 
@@ -34,7 +40,8 @@ app.get('/', function (req, res, next) {
   let couponService = new CouponService();
   couponService.getAllCoupons().then(function (coupons) {
     res.render('home', {
-      coupons: coupons
+      coupons: coupons,
+      couponCsrfToken: req.csrfToken()
     });
   }).catch(function (err) {    
     throw err;

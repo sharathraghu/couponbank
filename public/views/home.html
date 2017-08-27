@@ -108,22 +108,26 @@
 					</div>
 				</div>
 				<div class="row top-margin">
-					<% for(var index=0; index<coupons.length; index++) { %>
-					<div class="col-md-2">
-						<div class="thumbnail">
-							<img alt="Coupon Preview" src="<%=coupons[index].getFileBinData()%>" class="rounded">
-							<div class="caption">
-								<h4 class="small"><%=coupons[index].getCouponName()%></h4>
-							</div>							
-							<hr>
-							<div>								
-								<div class="text-center">
-									<button class="btn btn-primary">View Details</button>
+					<form role="form" action="/addToCart" method="post">
+						<% for(var index=0; index<coupons.length; index++) { %>
+							<div class="col-md-2">
+								<div class="thumbnail">
+									<img alt="Coupon Preview" src="<%=coupons[index].getFileBinData()%>" class="rounded">
+									<div class="caption">
+										<h4 class="small">
+											<%=coupons[index].getCouponName()%>
+										</h4>
+									</div>
+									<hr>
+									<div>
+										<div class="text-center">
+											<button class="btn btn-primary" type="submit">Add to Cart</button>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-					<% } %>
+						<% } %>
+					</form>
 				</div>
 			</div>
 		</div>

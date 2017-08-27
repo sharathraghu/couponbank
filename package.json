@@ -18,6 +18,8 @@
     "body-parser": "^1.17.1",
     "bunyan": "^1.8.10",
     "child_process": "^1.0.2",
+    "connect-redis": "^3.3.0",
+    "csurf": "^1.9.0",
     "del": "^3.0.0",
     "ejs": "^2.5.6",
     "express": "^4.15.2",
@@ -35,6 +37,7 @@
     "mongoose": "^4.10.8",
     "nodemon": "^1.11.0",
     "path": "^0.12.7",
+    "redis": "^2.8.0",
     "run-sequence": "^2.0.0",
     "serve-favicon": "^2.4.3",
     "superagent": "^3.5.2"
