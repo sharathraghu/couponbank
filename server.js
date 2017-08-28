@@ -14,7 +14,7 @@ var csurf = require("csurf");
 
 var userRouter = require('./app/controllers/userController');
 var couponRouter = require('./app/controllers/couponController');
-const CouponService = require('./app/services/couponService');
+var commonRouter = require('./app/controllers/commonController');
 
 var app = express();
 
@@ -25,8 +25,7 @@ app.use(session({ store: new redisStore({host: 'pub-redis-18816.us-west-2-1.1.ec
 app.use(csurf());
 app.use(favicon(path.join(__dirname, 'favicon.ico')));
 
-app.use(userRouter, couponRouter);
-
+app.use(userRouter, couponRouter, commonRouter);
 
 app.engine('.html', require('ejs').__express);
 
@@ -35,17 +34,5 @@ app.set('view engine', 'html');
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 systemConfig.mongooseModule().connect(properties[env].mongoDBURL, { useMongoClient: true });
 
-app.get('/', function (req, res, next) {
-  log.info("%s", "Lord Ganesh grace");  
-  let couponService = new CouponService();
-  couponService.getAllCoupons().then(function (coupons) {
-    res.render('home', {
-      coupons: coupons     
-    });
-  }).catch(function (err) {    
-    throw err;
-  });
-});
-
-var port = (process.env.PORT === undefined) ? '9088' : process.env.PORT;
+var port = (process.env.PORT === undefined) ? properties.devPort : process.env.PORT;
 app.listen(port);
