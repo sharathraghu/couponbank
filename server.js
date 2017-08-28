@@ -5,7 +5,7 @@ var fileUploadUtil = require('express-fileupload');
 var session = require('express-session');
 var redis = require('redis');
 var redisStore = require('connect-redis')(session);
-var redisClient  = redis.createClient();
+var redisClient  = redis.createClient("redis://:bankcoupon@pub-redis-18816.us-west-2-1.1.ec2.garantiadata.com:18816");
 var favicon = require('serve-favicon');
 var path = require('path');
 var log = systemConfig.loggerModule();
@@ -21,7 +21,7 @@ var app = express();
 app.use("/asset", express.static(__dirname + '/dist/'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(fileUploadUtil());
-app.use(session({ store: new redisStore({host: 'localhost', port: 6379, client: redisClient}), secret: 'CouponBank', resave: false, saveUninitialized: false, cookie: { maxAge: 1800000 }, name: 'id' }));
+app.use(session({ store: new redisStore({host: 'pub-redis-18816.us-west-2-1.1.ec2.garantiadata.com', port: 18816, client: redisClient, pass:'bankcoupon'}), secret: 'CouponBank', resave: false, saveUninitialized: false, cookie: { maxAge: 1800000 }, name: 'id' }));
 app.use(csurf());
 app.use(favicon(path.join(__dirname, 'favicon.ico')));
 
@@ -40,8 +40,7 @@ app.get('/', function (req, res, next) {
   let couponService = new CouponService();
   couponService.getAllCoupons().then(function (coupons) {
     res.render('home', {
-      coupons: coupons,
-      couponCsrfToken: req.csrfToken()
+      coupons: coupons     
     });
   }).catch(function (err) {    
     throw err;

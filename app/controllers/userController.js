@@ -76,6 +76,12 @@ userRouter.get('/userLogout', function (req, res, next) {
   navigateToHome(req, res);
 });
 
+userRouter.get('/userstuff', function(req, res){
+  res.render('userLogin', {
+    couponCsrfToken: req.csrfToken()
+  });
+});
+
 function navigateToHome(req, res) {
   var couponSession = req.session;
   let couponService = new CouponService();
