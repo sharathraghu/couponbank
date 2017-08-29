@@ -17,12 +17,21 @@ userRouter.post("/navToUserDashbord", function (req, res, next) {
     user.setLastName(req.body.lastName);
     user.setEmail(req.body.exampleInputEmail1);
     user.setPassword(req.body.exampleInputPassword1);
-
-    userService.saveNewUser(user).then(function (product) {
-      couponSession.user = user;
-      navigateToUsrDashboard(res, user);
-    }).catch(function (err) {
-      throw err;
+    userService.getUserByEmail(req.body.exampleInputEmail1).then(function (userDB) {
+      if(userDB == null) {
+        userService.saveNewUser(user).then(function (product) {
+          couponSession.user = user;
+          navigateToUsrDashboard(res, user);
+        }).catch(function (err) {
+          throw err;
+        });
+      } else {
+        res.render('userLogin', {
+          hasError: true,
+          errorMessage: 'User Name already existis, please try with different user name',
+          couponCsrfToken: req.csrfToken()
+        });
+      }
     });
   } else {
     userService.getUserByEmail(req.body.exampleInputEmail1).then(function (userDB) {
@@ -78,7 +87,8 @@ userRouter.get('/userLogout', function (req, res, next) {
 
 userRouter.get('/userstuff', function(req, res){
   res.render('userLogin', {
-    couponCsrfToken: req.csrfToken()
+    couponCsrfToken: req.csrfToken(),
+    hasError: false
   });
 });
 
