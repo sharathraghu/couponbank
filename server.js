@@ -8,6 +8,7 @@ var redisStore = require('connect-redis')(session);
 var redisClient  = redis.createClient("redis://:bankcoupon@pub-redis-18816.us-west-2-1.1.ec2.garantiadata.com:18816");
 var favicon = require('serve-favicon');
 var path = require('path');
+var validate = require('express-validation');
 var log = systemConfig.loggerModule();
 var properties = require('./app/config/properties');
 var csurf = require("csurf");
@@ -23,6 +24,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(fileUploadUtil());
 app.use(session({ store: new redisStore({host: 'pub-redis-18816.us-west-2-1.1.ec2.garantiadata.com', port: 18816, client: redisClient, pass:'bankcoupon'}), secret: 'CouponBank', resave: false, saveUninitialized: false, cookie: { maxAge: 1800000 }, name: 'id' }));
 app.use(csurf());
+app.use(validate());
 app.use(favicon(path.join(__dirname, 'favicon.ico')));
 
 app.use(userRouter, couponRouter, commonRouter);

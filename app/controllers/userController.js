@@ -17,6 +17,17 @@ userRouter.post("/navToUserDashbord", function (req, res, next) {
     user.setLastName(req.body.lastName);
     user.setEmail(req.body.exampleInputEmail1);
     user.setPassword(req.body.exampleInputPassword1);
+
+    req.checkBody('exampleInputEmail1','Email is not valid').notEmpty().isEmail();
+    req.checkBody('exampleInputPassword1','Password is not valid').isLength({min: 6});
+    var errors = req.validationErrors();
+    if(errors) {
+      res.render('userLogin', {
+        hasError: true,
+        errorMessage: 'User Name already existis, please try with different user name',
+        couponCsrfToken: req.csrfToken()
+      });
+    }
     userService.getUserByEmail(req.body.exampleInputEmail1).then(function (userDB) {
       if(userDB == null) {
         userService.saveNewUser(user).then(function (product) {
