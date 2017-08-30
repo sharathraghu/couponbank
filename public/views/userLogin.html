@@ -55,9 +55,7 @@
                     <div class="alert alert-warning">
                         <strong>Warning!</strong>
                         <hr>
-                        <%for(index = 0; index<errors.length; index++) { %>
-                            <%=errors[index].msg%>
-                        <% } %>
+                        <%=errorMessage%>
                     </div>
                     <% } %>
                         <div class="tabbable" id="tabs-168085">
@@ -105,7 +103,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email address</label>
-                                                <input class="form-control" id="exampleInputEmail1" name="exampleInputEmail1" type="email">
+                                                <input class="form-control" id="exampleInputEmail1" name="exampleInputEmail1" type="text">
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputPassword1">Password</label>

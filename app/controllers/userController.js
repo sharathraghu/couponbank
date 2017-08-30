@@ -20,29 +20,38 @@ userRouter.post("/navToUserDashbord", function (req, res, next) {
 
     req.checkBody('exampleInputEmail1','Email is not valid').notEmpty().isEmail();
     req.checkBody('exampleInputPassword1','Password is not valid').isLength({min: 6});
-    var errors = req.validationErrors();
-    if(errors) {
-      res.render('userLogin', {
-        hasError: true,
-        errorMessage: 'User Name already existis, please try with different user name',
-        couponCsrfToken: req.csrfToken()
-      });
-    }
-    userService.getUserByEmail(req.body.exampleInputEmail1).then(function (userDB) {
-      if(userDB == null) {
-        userService.saveNewUser(user).then(function (product) {
-          couponSession.user = user;
-          navigateToUsrDashboard(res, user);
-        }).catch(function (err) {
-          throw err;
+    var errorsPromise = req.getValidationResult();
+    var errorMessage = "";
+    errorsPromise.then(function(errors){
+      if(!errors.isEmpty()) {
+        errors.array().forEach(function(error) {
+          errorMessage += error.msg + '&';
         });
-      } else {
         res.render('userLogin', {
           hasError: true,
-          errorMessage: 'User Name already existis, please try with different user name',
+          errorMessage: errorMessage,
           couponCsrfToken: req.csrfToken()
         });
+      } else {
+        userService.getUserByEmail(req.body.exampleInputEmail1).then(function (userDB) {
+          if(userDB == null) {
+            userService.saveNewUser(user).then(function (product) {
+              couponSession.user = user;
+              navigateToUsrDashboard(res, user);
+            }).catch(function (err) {
+              throw err;
+            });
+          } else {
+            res.render('userLogin', {
+              hasError: true,
+              errorMessage: 'User Name already existis, please try with different user name',
+              couponCsrfToken: req.csrfToken()
+            });
+          }
+        });
       }
+    }).catch(function(err){
+      throw err;
     });
   } else {
     userService.getUserByEmail(req.body.exampleInputEmail1).then(function (userDB) {
