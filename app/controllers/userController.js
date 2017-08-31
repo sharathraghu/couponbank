@@ -2,6 +2,7 @@ var systemConfig = require('./systemController');
 const User = require('../classes/user');
 const CouponService = require('../services/couponService');
 const UserService = require('../services/userService');
+var validator = require('../utils/validators');
 
 var express = systemConfig.expressModule();
 var userRouter = express.Router();
@@ -18,8 +19,7 @@ userRouter.post("/navToUserDashbord", function (req, res, next) {
     user.setEmail(req.body.exampleInputEmail1);
     user.setPassword(req.body.exampleInputPassword1);
 
-    req.checkBody('exampleInputEmail1','Email is not valid').notEmpty().isEmail();
-    req.checkBody('exampleInputPassword1','Password is not valid').isLength({min: 6});
+    req.checkBody(validator.newUser);
     var errorsPromise = req.getValidationResult();
     var errorMessage = "";
     errorsPromise.then(function(errors){
@@ -30,7 +30,8 @@ userRouter.post("/navToUserDashbord", function (req, res, next) {
         res.render('userLogin', {
           hasError: true,
           errorMessage: errorMessage,
-          couponCsrfToken: req.csrfToken()
+          couponCsrfToken: req.csrfToken(),
+          indicator : 'newUser'
         });
       } else {
         userService.getUserByEmail(req.body.exampleInputEmail1).then(function (userDB) {
@@ -45,7 +46,8 @@ userRouter.post("/navToUserDashbord", function (req, res, next) {
             res.render('userLogin', {
               hasError: true,
               errorMessage: 'User Name already existis, please try with different user name',
-              couponCsrfToken: req.csrfToken()
+              couponCsrfToken: req.csrfToken(),
+              indicator : 'newUser'
             });
           }
         });
@@ -108,7 +110,8 @@ userRouter.get('/userLogout', function (req, res, next) {
 userRouter.get('/userstuff', function(req, res){
   res.render('userLogin', {
     couponCsrfToken: req.csrfToken(),
-    hasError: false
+    hasError: false,
+    indicator : ''
   });
 });
 
