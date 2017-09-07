@@ -1,7 +1,7 @@
-function openUserDiv(indicator) {
-    if(indicator === "newUser") {       
+function openUserDiv(indicator , hasError) {
+    if(indicator === "newUser" && hasError) {       
         $('.nav-tabs a[href="#panel-945372"]').tab('show');
-    } else if(indicator === "returningUser") {
+    } else if(indicator === "returningUser" && hasError) {
         $('.nav-tabs a[href="#panel-214671"]').tab('show');
     }
 }

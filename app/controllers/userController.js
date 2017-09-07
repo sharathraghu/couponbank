@@ -2,6 +2,7 @@ var systemConfig = require('./systemController');
 const User = require('../classes/user');
 const CouponService = require('../services/couponService');
 const UserService = require('../services/userService');
+var validator = require('../utils/validators');
 
 var express = systemConfig.expressModule();
 var userRouter = express.Router();
@@ -11,30 +12,31 @@ userRouter.post("/navToUserDashbord", function (req, res, next) {
   let user = new User();
   var couponSession = req.session;
   let userService = new UserService();
-
+  var errorsPromise;
+  var errorMessage = "";
   if (req.body.usrt === 'n') {
     user.setFisrstName(req.body.firstName);
     user.setLastName(req.body.lastName);
     user.setEmail(req.body.exampleInputEmail1);
     user.setPassword(req.body.exampleInputPassword1);
 
-    req.checkBody('exampleInputEmail1','Email is not valid').notEmpty().isEmail();
-    req.checkBody('exampleInputPassword1','Password is not valid').isLength({min: 6});
-    var errorsPromise = req.getValidationResult();
-    var errorMessage = "";
-    errorsPromise.then(function(errors){
-      if(!errors.isEmpty()) {
-        errors.array().forEach(function(error) {
+    req.checkBody(validator.newUser);
+    errorsPromise = req.getValidationResult();
+    errorMessage = "";
+    errorsPromise.then(function (errors) {
+      if (!errors.isEmpty()) {
+        errors.array().forEach(function (error) {
           errorMessage += error.msg + '&';
         });
         res.render('userLogin', {
           hasError: true,
           errorMessage: errorMessage,
-          couponCsrfToken: req.csrfToken()
+          couponCsrfToken: req.csrfToken(),
+          indicator: 'newUser'
         });
       } else {
         userService.getUserByEmail(req.body.exampleInputEmail1).then(function (userDB) {
-          if(userDB == null) {
+          if (userDB == null) {
             userService.saveNewUser(user).then(function (product) {
               couponSession.user = user;
               navigateToUsrDashboard(res, user);
@@ -45,30 +47,49 @@ userRouter.post("/navToUserDashbord", function (req, res, next) {
             res.render('userLogin', {
               hasError: true,
               errorMessage: 'User Name already existis, please try with different user name',
-              couponCsrfToken: req.csrfToken()
+              couponCsrfToken: req.csrfToken(),
+              indicator: 'newUser'
             });
           }
         });
       }
-    }).catch(function(err){
+    }).catch(function (err) {
       throw err;
     });
   } else {
-    userService.getUserByEmail(req.body.exampleInputEmail1).then(function (userDB) {
-      if (userDB != null && userDB.password === req.body.exampleInputPassword1) {
-        user.setFisrstName(userDB.first_name);
-        user.setLastName(userDB.last_name);
-        user.setEmail(userDB.email);
-        couponSession.user = user;
-        navigateToUsrDashboard(res, user);
+    req.checkBody(validator.existingUser);
+    errorsPromise = req.getValidationResult();
+    errorMessage = "";
+    errorsPromise.then(function (errors) {
+      if (!errors.isEmpty()) {
+        errors.array().forEach(function (error) {
+          errorMessage += error.msg + '&';
+        });
+        res.render('userLogin', {
+          hasError: true,
+          errorMessage: errorMessage,
+          couponCsrfToken: req.csrfToken(),
+          indicator: 'returningUser'
+        });
       } else {
-        navigateToHome(req, res);
+        userService.getUserByEmail(req.body.exampleInputEmail1).then(function (userDB) {
+          if (userDB != null && userDB.password === req.body.exampleInputPassword1) {
+            user.setFisrstName(userDB.first_name);
+            user.setLastName(userDB.last_name);
+            user.setEmail(userDB.email);
+            couponSession.user = user;
+            navigateToUsrDashboard(res, user);
+          } else {
+            navigateToHome(req, res);
+          }
+        }).catch(function (err) {
+          throw err;
+        });
       }
     }).catch(function (err) {
       throw err;
     });
   }
-
 });
 
 userRouter.get('/userprofile', function (req, res, next) {
@@ -105,10 +126,11 @@ userRouter.get('/userLogout', function (req, res, next) {
   navigateToHome(req, res);
 });
 
-userRouter.get('/userstuff', function(req, res){
+userRouter.get('/userstuff', function (req, res) {
   res.render('userLogin', {
     couponCsrfToken: req.csrfToken(),
-    hasError: false
+    hasError: false,
+    indicator: ''
   });
 });
 

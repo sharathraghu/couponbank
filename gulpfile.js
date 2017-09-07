@@ -22,7 +22,7 @@ gulp.task('css', function () {
 });
 
 gulp.task('lint', function () {
-    return gulp.src(['public/js/script.js', 'app/classes/*.js','app/config/*.js','app/controllers/*.js','app/services/*.js'])
+    return gulp.src(['public/js/script.js', 'app/classes/*.js','app/config/*.js','app/controllers/*.js','app/services/*.js','app/utils/*.js'])
         .pipe(jshint())
         .pipe(jshint.reporter('default'));
 });
