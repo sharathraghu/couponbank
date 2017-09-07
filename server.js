@@ -21,10 +21,10 @@ var app = express();
 
 app.use("/asset", express.static(__dirname + '/dist/'));
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(validate());
 app.use(fileUploadUtil());
 app.use(session({ store: new redisStore({host: 'pub-redis-18816.us-west-2-1.1.ec2.garantiadata.com', port: 18816, client: redisClient, pass:'bankcoupon'}), secret: 'CouponBank', resave: false, saveUninitialized: false, cookie: { maxAge: 1800000 }, name: 'id' }));
 app.use(csurf());
-app.use(validate());
 app.use(favicon(path.join(__dirname, 'favicon.ico')));
 
 app.use(userRouter, couponRouter, commonRouter);
